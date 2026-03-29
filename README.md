@@ -7,7 +7,7 @@
 > [!WARNING]
 > Unofficial, community-maintained SDK. Not extensively tested in production. Use at your own risk.
 
-Go client for the [Polymarket Data API](https://data-api.polymarket.com). Targets the latest stable Go release.
+Go client for the [Polymarket Data API](https://data-api.polymarket.com). This is a **read-only** SDK focused on market data, trader analytics, and activity history. For trading and order placement, use the CLOB SDK.
 
 ## Features
 
