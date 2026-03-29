@@ -1,6 +1,6 @@
 # go-polymarket-data
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/nijaru/go-polymarket-data/polymarketdata.svg)](https://pkg.go.dev/github.com/nijaru/go-polymarket-data/polymarketdata)
+[![Go Reference](https://pkg.go.dev/badge/github.com/nijaru/go-polymarket-data.svg)](https://pkg.go.dev/github.com/nijaru/go-polymarket-data)
 [![CI](https://github.com/nijaru/go-polymarket-data/actions/workflows/ci.yml/badge.svg)](https://github.com/nijaru/go-polymarket-data/actions/workflows/ci.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nijaru/go-polymarket-data)](https://goreportcard.com/report/github.com/nijaru/go-polymarket-data)
 
@@ -21,7 +21,7 @@ Go client for the [Polymarket Data API](https://data-api.polymarket.com). Target
 ## Install
 
 ```bash
-go get github.com/nijaru/go-polymarket-data/polymarketdata
+go get github.com/nijaru/go-polymarket-data
 ```
 
 Requires **Go 1.26.1+**.
@@ -29,7 +29,7 @@ Requires **Go 1.26.1+**.
 ## Quickstart
 
 ```go
-import "github.com/nijaru/go-polymarket-data/polymarketdata"
+import "github.com/nijaru/go-polymarket-data"
 
 client := polymarketdata.New(polymarketdata.Config{})
 ctx := context.Background()
