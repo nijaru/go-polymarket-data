@@ -162,80 +162,80 @@ type TraderLeaderboardEntry struct {
 }
 
 type PositionParams struct {
-	User          string   `url:"user"`
-	Markets       []string `url:"market,omitzero"`
-	EventIDs      []string `url:"eventID,omitzero"`
-	SizeThreshold string   `url:"sizeThreshold,omitzero"`
-	Redeemable    *bool    `url:"redeemable,omitzero"`
-	Mergeable     *bool    `url:"mergeable,omitzero"`
-	Limit         int      `url:"limit,omitzero"`
-	Offset        int      `url:"offset,omitzero"`
-	SortBy        string   `url:"sortBy,omitzero"`
-	SortDirection string   `url:"sortDirection,omitzero"`
-	Title         string   `url:"title,omitzero"`
+	User          string
+	Markets       []string
+	EventIDs      []string
+	SizeThreshold string
+	Redeemable    *bool
+	Mergeable     *bool
+	Limit         int
+	Offset        int
+	SortBy        string
+	SortDirection string
+	Title         string
 }
 
 type ClosedPositionParams struct {
-	User          string   `url:"user"`
-	Markets       []string `url:"market,omitzero"`
-	EventIDs      []string `url:"eventID,omitzero"`
-	Title         string   `url:"title,omitzero"`
-	Limit         int      `url:"limit,omitzero"`
-	Offset        int      `url:"offset,omitzero"`
-	SortBy        string   `url:"sortBy,omitzero"`
-	SortDirection string   `url:"sortDirection,omitzero"`
+	User          string
+	Markets       []string
+	EventIDs      []string
+	Title         string
+	Limit         int
+	Offset        int
+	SortBy        string
+	SortDirection string
 }
 
 type TradeParams struct {
-	User      string   `url:"user,omitzero"`
-	Markets   []string `url:"market,omitzero"`
-	EventIDs  []string `url:"eventID,omitzero"`
-	Limit     int      `url:"limit,omitzero"`
-	Offset    int      `url:"offset,omitzero"`
-	TakerOnly *bool    `url:"takerOnly,omitzero"`
-	Side      string   `url:"side,omitzero"`
+	User      string
+	Markets   []string
+	EventIDs  []string
+	Limit     int
+	Offset    int
+	TakerOnly *bool
+	Side      string
 }
 
 type ActivityParams struct {
-	User          string   `url:"user"`
-	Markets       []string `url:"market,omitzero"`
-	EventIDs      []string `url:"eventID,omitzero"`
-	ActivityTypes []string `url:"type,omitzero"`
-	Limit         int      `url:"limit,omitzero"`
-	Offset        int      `url:"offset,omitzero"`
-	Start         int64    `url:"start,omitzero"`
-	End           int64    `url:"end,omitzero"`
-	SortBy        string   `url:"sortBy,omitzero"`
-	SortDirection string   `url:"sortDirection,omitzero"`
-	Side          string   `url:"side,omitzero"`
+	User          string
+	Markets       []string
+	EventIDs      []string
+	ActivityTypes []string
+	Limit         int
+	Offset        int
+	Start         int64
+	End           int64
+	SortBy        string
+	SortDirection string
+	Side          string
 }
 
 type HoldersParams struct {
-	Markets    []string `url:"market"`
-	Limit      int      `url:"limit,omitzero"`
-	MinBalance int      `url:"minBalance,omitzero"`
+	Markets    []string
+	Limit      int
+	MinBalance int
 }
 
 type OpenInterestParams struct {
-	Markets []string `url:"market,omitzero"`
+	Markets []string
 }
 
 type LeaderboardParams struct {
-	Category   string `url:"category,omitzero"`
-	TimePeriod string `url:"timePeriod,omitzero"`
-	SortBy     string `url:"orderBy,omitzero"`
-	Limit      int    `url:"limit,omitzero"`
-	Offset     int    `url:"offset,omitzero"`
-	User       string `url:"user,omitzero"`
-	UserName   string `url:"userName,omitzero"`
+	Category   string
+	TimePeriod string
+	SortBy     string
+	Limit      int
+	Offset     int
+	User       string
+	UserName   string
 }
 
 type BuilderLeaderboardParams struct {
-	TimePeriod string `url:"timePeriod,omitzero"`
-	Limit      int    `url:"limit,omitzero"`
-	Offset     int    `url:"offset,omitzero"`
+	TimePeriod string
+	Limit      int
+	Offset     int
 }
 
 type BuilderVolumeParams struct {
-	TimePeriod string `url:"timePeriod,omitzero"`
+	TimePeriod string
 }

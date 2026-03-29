@@ -190,10 +190,12 @@ func TestDataClient(t *testing.T) {
 	})
 
 	t.Run("APIError", func(t *testing.T) {
-		errServ := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("bad request"))
-		}))
+		errServ := httptest.NewServer(
+			http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte("bad request"))
+			}),
+		)
 		defer errServ.Close()
 
 		badClient := New(Config{Host: errServ.URL})

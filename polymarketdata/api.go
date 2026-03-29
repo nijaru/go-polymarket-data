@@ -72,7 +72,10 @@ func (c *Client) IterPositions(ctx context.Context, p PositionParams) iter.Seq2[
 	}
 }
 
-func (c *Client) GetClosedPositions(ctx context.Context, p ClosedPositionParams) ([]ClosedPosition, error) {
+func (c *Client) GetClosedPositions(
+	ctx context.Context,
+	p ClosedPositionParams,
+) ([]ClosedPosition, error) {
 	q := url.Values{}
 	q.Set("user", p.User)
 	setCommaList(q, "market", p.Markets)
@@ -88,7 +91,10 @@ func (c *Client) GetClosedPositions(ctx context.Context, p ClosedPositionParams)
 	return out, err
 }
 
-func (c *Client) IterClosedPositions(ctx context.Context, p ClosedPositionParams) iter.Seq2[ClosedPosition, error] {
+func (c *Client) IterClosedPositions(
+	ctx context.Context,
+	p ClosedPositionParams,
+) iter.Seq2[ClosedPosition, error] {
 	return func(yield func(ClosedPosition, error) bool) {
 		offset := p.Offset
 		limit := p.Limit
@@ -253,7 +259,10 @@ func (c *Client) GetTradedCount(ctx context.Context, user string) (int, error) {
 	return out.Traded, err
 }
 
-func (c *Client) GetOpenInterest(ctx context.Context, p OpenInterestParams) ([]OpenInterest, error) {
+func (c *Client) GetOpenInterest(
+	ctx context.Context,
+	p OpenInterestParams,
+) ([]OpenInterest, error) {
 	q := url.Values{}
 	setCommaList(q, "market", p.Markets)
 
@@ -271,7 +280,10 @@ func (c *Client) GetLiveVolume(ctx context.Context, eventID int64) (*LiveVolume,
 	return &out, err
 }
 
-func (c *Client) GetLeaderboard(ctx context.Context, p LeaderboardParams) ([]TraderLeaderboardEntry, error) {
+func (c *Client) GetLeaderboard(
+	ctx context.Context,
+	p LeaderboardParams,
+) ([]TraderLeaderboardEntry, error) {
 	q := url.Values{}
 	setString(q, "category", p.Category)
 	setString(q, "timePeriod", p.TimePeriod)
@@ -286,7 +298,10 @@ func (c *Client) GetLeaderboard(ctx context.Context, p LeaderboardParams) ([]Tra
 	return out, err
 }
 
-func (c *Client) IterLeaderboard(ctx context.Context, p LeaderboardParams) iter.Seq2[TraderLeaderboardEntry, error] {
+func (c *Client) IterLeaderboard(
+	ctx context.Context,
+	p LeaderboardParams,
+) iter.Seq2[TraderLeaderboardEntry, error] {
 	return func(yield func(TraderLeaderboardEntry, error) bool) {
 		offset := p.Offset
 		limit := p.Limit
@@ -318,7 +333,10 @@ func (c *Client) IterLeaderboard(ctx context.Context, p LeaderboardParams) iter.
 	}
 }
 
-func (c *Client) GetBuilderLeaderboard(ctx context.Context, p BuilderLeaderboardParams) ([]BuilderLeaderboardEntry, error) {
+func (c *Client) GetBuilderLeaderboard(
+	ctx context.Context,
+	p BuilderLeaderboardParams,
+) ([]BuilderLeaderboardEntry, error) {
 	q := url.Values{}
 	setString(q, "timePeriod", p.TimePeriod)
 	setInt(q, "limit", p.Limit)
@@ -329,7 +347,10 @@ func (c *Client) GetBuilderLeaderboard(ctx context.Context, p BuilderLeaderboard
 	return out, err
 }
 
-func (c *Client) IterBuilderLeaderboard(ctx context.Context, p BuilderLeaderboardParams) iter.Seq2[BuilderLeaderboardEntry, error] {
+func (c *Client) IterBuilderLeaderboard(
+	ctx context.Context,
+	p BuilderLeaderboardParams,
+) iter.Seq2[BuilderLeaderboardEntry, error] {
 	return func(yield func(BuilderLeaderboardEntry, error) bool) {
 		offset := p.Offset
 		limit := p.Limit
@@ -361,7 +382,10 @@ func (c *Client) IterBuilderLeaderboard(ctx context.Context, p BuilderLeaderboar
 	}
 }
 
-func (c *Client) GetBuilderVolume(ctx context.Context, p BuilderVolumeParams) ([]BuilderVolumeEntry, error) {
+func (c *Client) GetBuilderVolume(
+	ctx context.Context,
+	p BuilderVolumeParams,
+) ([]BuilderVolumeEntry, error) {
 	q := url.Values{}
 	setString(q, "timePeriod", p.TimePeriod)
 
