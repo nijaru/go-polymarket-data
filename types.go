@@ -1,4 +1,4 @@
-package polymarketdata
+package polydata
 
 import "time"
 

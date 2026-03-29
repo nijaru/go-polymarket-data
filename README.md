@@ -31,18 +31,18 @@ Requires **Go 1.26.1+**.
 ```go
 import "github.com/nijaru/go-polymarket-data"
 
-client := polymarketdata.New(polymarketdata.Config{})
+client := polydata.New(polydata.Config{})
 ctx := context.Background()
 
 // Leaderboard
-entries, err := client.GetLeaderboard(ctx, polymarketdata.LeaderboardParams{
+entries, err := client.GetLeaderboard(ctx, polydata.LeaderboardParams{
 	TimePeriod: "WEEK",
 	SortBy:     "PNL",
 	Limit:      5,
 })
 
 // Iterate positions with auto-pagination
-for pos, err := range client.IterPositions(ctx, polymarketdata.PositionParams{
+for pos, err := range client.IterPositions(ctx, polydata.PositionParams{
 	User: "0x1234...",
 }) {
 	if err != nil {
@@ -57,7 +57,7 @@ for pos, err := range client.IterPositions(ctx, polymarketdata.PositionParams{
 All list endpoints expose both a slice variant and a Go 1.23 range-over-function iterator:
 
 ```go
-for pos, err := range client.IterPositions(ctx, polymarketdata.PositionParams{
+for pos, err := range client.IterPositions(ctx, polydata.PositionParams{
 	User: "0x1234...",
 }) {
 	if err != nil {
@@ -86,10 +86,10 @@ for pos, err := range client.IterPositions(ctx, polymarketdata.PositionParams{
 
 ## Error Handling
 
-API errors are returned as `*polymarketdata.APIError` and expose the HTTP status code and body:
+API errors are returned as `*polydata.APIError` and expose the HTTP status code and body:
 
 ```go
-if apiErr, ok := err.(*polymarketdata.APIError); ok {
+if apiErr, ok := err.(*polydata.APIError); ok {
 	fmt.Printf("HTTP %d: %s\n", apiErr.StatusCode, apiErr.Message)
 }
 ```
