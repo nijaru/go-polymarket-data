@@ -24,12 +24,11 @@ const (
 func (c *Client) GetPositions(ctx context.Context, p PositionParams) ([]Position, error) {
 	q := url.Values{}
 	q.Set("user", p.User)
-	setCommaList(q, "market", p.Markets)
-	setCommaList(q, "eventID", p.EventIDs)
+	p.Filter.appendQuery(q)
 	setString(q, "sizeThreshold", p.SizeThreshold)
 	setBool(q, "redeemable", p.Redeemable)
 	setBool(q, "mergeable", p.Mergeable)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 500))
 	setInt(q, "offset", p.Offset)
 	setString(q, "sortBy", p.SortBy)
 	setString(q, "sortDirection", p.SortDirection)
@@ -43,10 +42,7 @@ func (c *Client) GetPositions(ctx context.Context, p PositionParams) ([]Position
 func (c *Client) IterPositions(ctx context.Context, p PositionParams) iter.Seq2[Position, error] {
 	return func(yield func(Position, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 100, 500)
 		for {
 			q := p
 			q.Limit = limit
@@ -78,10 +74,9 @@ func (c *Client) GetClosedPositions(
 ) ([]ClosedPosition, error) {
 	q := url.Values{}
 	q.Set("user", p.User)
-	setCommaList(q, "market", p.Markets)
-	setCommaList(q, "eventID", p.EventIDs)
+	p.Filter.appendQuery(q)
 	setString(q, "title", p.Title)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 50))
 	setInt(q, "offset", p.Offset)
 	setString(q, "sortBy", p.SortBy)
 	setString(q, "sortDirection", p.SortDirection)
@@ -97,10 +92,7 @@ func (c *Client) IterClosedPositions(
 ) iter.Seq2[ClosedPosition, error] {
 	return func(yield func(ClosedPosition, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 50, 50)
 		for {
 			q := p
 			q.Limit = limit
@@ -141,9 +133,8 @@ func (c *Client) GetTotalValue(ctx context.Context, user string, markets []strin
 func (c *Client) GetTrades(ctx context.Context, p TradeParams) ([]DataTrade, error) {
 	q := url.Values{}
 	setString(q, "user", p.User)
-	setCommaList(q, "market", p.Markets)
-	setCommaList(q, "eventID", p.EventIDs)
-	setInt(q, "limit", p.Limit)
+	p.Filter.appendQuery(q)
+	setInt(q, "limit", boundedLimit(p.Limit, 10000))
 	setInt(q, "offset", p.Offset)
 	setBool(q, "takerOnly", p.TakerOnly)
 	setString(q, "side", p.Side)
@@ -156,10 +147,7 @@ func (c *Client) GetTrades(ctx context.Context, p TradeParams) ([]DataTrade, err
 func (c *Client) IterTrades(ctx context.Context, p TradeParams) iter.Seq2[DataTrade, error] {
 	return func(yield func(DataTrade, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 100, 10000)
 		for {
 			q := p
 			q.Limit = limit
@@ -188,10 +176,9 @@ func (c *Client) IterTrades(ctx context.Context, p TradeParams) iter.Seq2[DataTr
 func (c *Client) GetActivity(ctx context.Context, p ActivityParams) ([]Activity, error) {
 	q := url.Values{}
 	q.Set("user", p.User)
-	setCommaList(q, "market", p.Markets)
-	setCommaList(q, "eventID", p.EventIDs)
+	p.Filter.appendQuery(q)
 	setCommaList(q, "type", p.ActivityTypes)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 500))
 	setInt(q, "offset", p.Offset)
 	setInt64(q, "start", p.Start)
 	setInt64(q, "end", p.End)
@@ -207,10 +194,7 @@ func (c *Client) GetActivity(ctx context.Context, p ActivityParams) ([]Activity,
 func (c *Client) IterActivity(ctx context.Context, p ActivityParams) iter.Seq2[Activity, error] {
 	return func(yield func(Activity, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 100, 500)
 		for {
 			q := p
 			q.Limit = limit
@@ -239,7 +223,7 @@ func (c *Client) IterActivity(ctx context.Context, p ActivityParams) iter.Seq2[A
 func (c *Client) GetHolders(ctx context.Context, p HoldersParams) ([]MetaHolder, error) {
 	q := url.Values{}
 	setCommaList(q, "market", p.Markets)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 20))
 	setInt(q, "minBalance", p.MinBalance)
 
 	var out []MetaHolder
@@ -288,7 +272,7 @@ func (c *Client) GetLeaderboard(
 	setString(q, "category", p.Category)
 	setString(q, "timePeriod", p.TimePeriod)
 	setString(q, "orderBy", p.SortBy)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 50))
 	setInt(q, "offset", p.Offset)
 	setString(q, "user", p.User)
 	setString(q, "userName", p.UserName)
@@ -304,10 +288,7 @@ func (c *Client) IterLeaderboard(
 ) iter.Seq2[TraderLeaderboardEntry, error] {
 	return func(yield func(TraderLeaderboardEntry, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 50, 50)
 		for {
 			q := p
 			q.Limit = limit
@@ -339,7 +320,7 @@ func (c *Client) GetBuilderLeaderboard(
 ) ([]BuilderLeaderboardEntry, error) {
 	q := url.Values{}
 	setString(q, "timePeriod", p.TimePeriod)
-	setInt(q, "limit", p.Limit)
+	setInt(q, "limit", boundedLimit(p.Limit, 50))
 	setInt(q, "offset", p.Offset)
 
 	var out []BuilderLeaderboardEntry
@@ -353,10 +334,7 @@ func (c *Client) IterBuilderLeaderboard(
 ) iter.Seq2[BuilderLeaderboardEntry, error] {
 	return func(yield func(BuilderLeaderboardEntry, error) bool) {
 		offset := p.Offset
-		limit := p.Limit
-		if limit <= 0 {
-			limit = 100
-		}
+		limit := iteratorLimit(p.Limit, 50, 50)
 		for {
 			q := p
 			q.Limit = limit

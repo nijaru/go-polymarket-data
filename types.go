@@ -163,8 +163,7 @@ type TraderLeaderboardEntry struct {
 
 type PositionParams struct {
 	User          string
-	Markets       []string
-	EventIDs      []string
+	Filter        MarketFilter
 	SizeThreshold string
 	Redeemable    *bool
 	Mergeable     *bool
@@ -177,8 +176,7 @@ type PositionParams struct {
 
 type ClosedPositionParams struct {
 	User          string
-	Markets       []string
-	EventIDs      []string
+	Filter        MarketFilter
 	Title         string
 	Limit         int
 	Offset        int
@@ -188,8 +186,7 @@ type ClosedPositionParams struct {
 
 type TradeParams struct {
 	User      string
-	Markets   []string
-	EventIDs  []string
+	Filter    MarketFilter
 	Limit     int
 	Offset    int
 	TakerOnly *bool
@@ -198,8 +195,7 @@ type TradeParams struct {
 
 type ActivityParams struct {
 	User          string
-	Markets       []string
-	EventIDs      []string
+	Filter        MarketFilter
 	ActivityTypes []string
 	Limit         int
 	Offset        int
