@@ -17,6 +17,7 @@ Go client for the [Polymarket Data API](https://data-api.polymarket.com). This i
 - **Leaderboards**: trader and builder rankings.
 - **Market data**: holders, open interest, live volume.
 - **Iterators**: Go 1.23 range-over-function iterators for memory-efficient streaming on all list endpoints.
+- **Filters**: mutually exclusive market or event filters for positions, trades, and activity.
 
 ## Install
 
@@ -65,6 +66,24 @@ for pos, err := range client.IterPositions(ctx, polydata.PositionParams{
 	}
 	fmt.Printf("%s: %s tokens\n", pos.Title, pos.Size)
 }
+```
+
+## Filters
+
+Requests that accept market scoping use a single `Filter` field with one of two constructors:
+
+```go
+polydata.MarketsFilter("market-a", "market-b")
+polydata.EventIDsFilter("event-123", "event-456")
+```
+
+Use the filter with `PositionParams`, `ClosedPositionParams`, `TradeParams`, or `ActivityParams`:
+
+```go
+items, err := client.GetPositions(ctx, polydata.PositionParams{
+	User:   "0x1234...",
+	Filter: polydata.MarketsFilter("market-a", "market-b"),
+})
 ```
 
 ## API Coverage
